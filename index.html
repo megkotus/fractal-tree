@@ -4,8 +4,56 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <script defer src="script.js"></script>
+    <!-- <style src="styles.css"></style> -->
   </head>
   <body>
-    <canvas id="canvas"></canvas>
+    <div>
+      <canvas id="myCanvas" width="1000" height="1000"></canvas>
+    </div>
+    <div>Branch length</div>
+    <div class="slidecontainer">
+      <input
+        type="range"
+        min="1"
+        max="500"
+        value="20"
+        class="slider"
+        id="lengthRange"
+      />
+    </div>
+    <div>Branch length reduction rate</div>
+    <div class="slidecontainer">
+      <input
+        type="range"
+        min="1"
+        max="8"
+        value="1"
+        class="slider"
+        id="lengthDecrement"
+      />
+    </div>
+    <div>Right angle</div>
+    <div class="slidecontainer">
+      <input
+        type="range"
+        min="1"
+        max="5"
+        value="0.3"
+        class="slider"
+        id="rightAngle"
+      />
+    </div>
+    <div>Left angle</div>
+    <div class="slidecontainer">
+      <input
+        type="range"
+        min="1"
+        max="5"
+        value="0.3"
+        class="slider"
+        id="leftAngle"
+      />
+    </div>
   </body>
 </html>

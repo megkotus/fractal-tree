@@ -14,31 +14,6 @@ const widthInput = document.getElementById("width");
 const colorTreeInput = document.getElementById("treecolor");
 const colorBgInput = document.getElementById("background-color");
 
-function getValues() {
-  const aValue = parseInt(length.value);
-  const bValue = parseInt(b.value);
-  result.value = aValue + bValue;
-}
-
-class Tree {
-  constructor(begin, end) {
-    this.begin = begin;
-    this.end = end;
-  }
-}
-
-class Root extends Tree {
-  constructor(begin, end) {
-    super(begin, end);
-  }
-}
-
-class Branch extends Tree {
-  constructor(begin, end) {
-    super(begin, end);
-  }
-}
-
 const angle = Math.PI / 10;
 let lengthRatio;
 let rightAngle;
@@ -96,16 +71,23 @@ form.addEventListener("submit", function (e) {
   draw();
 });
 
-// To do:
+// Done:
 // 1. draw only within canvas range
 // 2. change bg color - form/dropdown
 // 3. change stroke color - form/dropdown
 // 4. Add starting values -> change reset condition
 // 5. Add form
 
-// Figure out: change line width - now the tree is a single path
+// To do:
+// 1. Classes or MCV
+// 2. Apply more complicated algorythms
+
+// ----------
+
+// Figure out: decrease line width of new branches
 
 // Getting the logic
+// The trunk is called outside and the starting points are saved -> can use end points instead of translate
 
 // function drawTree(start, startY, length, angle, branchWidth) {
 //   ctx.lineWidth = branchWidth;

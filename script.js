@@ -3,22 +3,53 @@
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
 
-const slider1 = document.getElementById("lengthRange");
-const slider2 = document.getElementById("lengthDecrement");
-const slider3 = document.getElementById("rightAngle");
-const slider4 = document.getElementById("leftAngle");
+// Form
+const form = document.getElementById("form");
 
-// const length = 250;
-// const lengthRatio = 0.7;
+const lengthInput = document.getElementById("length");
+const lengthDecayInput = document.getElementById("decay");
+const rightAngleMultiplyerInput = document.getElementById("right");
+const leftAngleMultiplyerInput = document.getElementById("left");
+const widthInput = document.getElementById("width");
+const colorTreeInput = document.getElementById("treecolor");
+const colorBgInput = document.getElementById("background-color");
+
+function getValues() {
+  const aValue = parseInt(length.value);
+  const bValue = parseInt(b.value);
+  result.value = aValue + bValue;
+}
+
+class Tree {
+  constructor(begin, end) {
+    this.begin = begin;
+    this.end = end;
+  }
+}
+
+class Root extends Tree {
+  constructor(begin, end) {
+    super(begin, end);
+  }
+}
+
+class Branch extends Tree {
+  constructor(begin, end) {
+    super(begin, end);
+  }
+}
+
 const angle = Math.PI / 10;
-let lengthRatioInput;
-let angleMultiplyer;
+let lengthRatio;
 let rightAngle;
 let leftAngle;
-let lengthInput;
+let length;
+let width;
+let colorTree;
+let colorBg = colorBgInput.value;
 
 function background() {
-  ctx.fillStyle = "lightblue";
+  ctx.fillStyle = colorBg;
   ctx.fillRect(10, 10, 1500, 1500);
 }
 
@@ -27,49 +58,41 @@ function branch(len) {
   ctx.moveTo(0, 0);
   ctx.lineTo(0, -len);
   ctx.translate(0, -len);
-  ctx.strokeStyle = "red";
-  ctx.lineWidth = 10;
+  ctx.strokeStyle = colorTree;
+  ctx.lineWidth = width;
   ctx.stroke();
   if (len > 10) {
     ctx.save();
     ctx.rotate(rightAngle);
-    branch(len * lengthRatioInput);
-    console.log(lengthRatioInput);
+    branch(len * lengthRatio);
     ctx.restore();
     ctx.save();
     ctx.rotate(leftAngle);
-    branch(len * lengthRatioInput);
+    branch(len * lengthRatio);
     ctx.restore();
   }
 }
 
 function draw() {
   background();
-  ctx.translate(500, 1000);
-  branch(lengthInput);
+  ctx.translate(600, 1000);
+  branch(length);
 }
 
-slider1.addEventListener("change", function () {
-  if (lengthInput) ctx.reset();
-  lengthInput = Number(slider1.value);
-  draw();
-});
+background();
 
-slider2.addEventListener("change", function () {
-  if (lengthRatioInput) ctx.reset();
-  lengthRatioInput = Number(slider2.value) / 10;
-  draw();
-});
+form.addEventListener("submit", function (e) {
+  e.preventDefault();
+  ctx.reset();
 
-slider3.addEventListener("change", function () {
-  if (rightAngle) ctx.reset();
-  rightAngle = angle * Number(slider3.value);
-  draw();
-});
+  length = +lengthInput.value;
+  lengthRatio = +lengthDecayInput.value / 10;
+  rightAngle = angle * +rightAngleMultiplyerInput.value;
+  leftAngle = angle * -leftAngleMultiplyerInput.value;
+  width = +widthInput.value;
+  colorTree = colorTreeInput.value;
+  colorBg = colorBgInput.value;
 
-slider4.addEventListener("change", function () {
-  if (leftAngle) ctx.reset();
-  leftAngle = -(angle * Number(slider4.value));
   draw();
 });
 
@@ -81,3 +104,31 @@ slider4.addEventListener("change", function () {
 // 5. Add form
 
 // Figure out: change line width - now the tree is a single path
+
+// Getting the logic
+
+// function drawTree(start, startY, length, angle, branchWidth) {
+//   ctx.lineWidth = branchWidth;
+//   ctx.beginPath();
+//   ctx.save();
+//   ctx.strokeStyle = "pink";
+//   ctx.fillStyle = "lightblue";
+//   ctx.translate(start, startY);
+//   ctx.rotate((angle * Math.PI) / 180);
+//   ctx.moveTo(0, 0);
+//   ctx.lineTo(0, -length);
+//   ctx.stroke();
+
+//   if (length < 10) {
+//     ctx.restore();
+//     return;
+//   }
+
+//   drawTree(0, -length, length * 0.8, angle - 12.5, branchWidth * 0.8);
+//   drawTree(0, -length, length * 0.8, angle + 12.5, branchWidth * 0.8);
+
+//   ctx.restore();
+// }
+
+// drawTree(500, 675, 120, 0, 45, 34, 244, 26);
+// drawTree(500, 700, 100, 0, 10);

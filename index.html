@@ -5,12 +5,106 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script defer src="script.js"></script>
-    <!-- <style src="styles.css"></style> -->
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div>
-      <canvas id="myCanvas" width="1000" height="1000"></canvas>
+    <div class="container">
+      <div class="canvas-container">
+        <div>
+          <canvas id="myCanvas" width="1200" height="1000"></canvas>
+        </div>
+      </div>
+      <div class="form-container">
+        <h2 class="title">Drawing Properties</h2>
+        <form id="form">
+          <div>
+            <label for="length">Trunk length</label>
+            <input
+              type="number"
+              min="100"
+              max="300"
+              value="100"
+              step="5"
+              id="length"
+              name="trunk_length"
+            />
+          </div>
+          <div>
+            <label for="decay">Dacay</label>
+            <input
+              type="number"
+              min="5"
+              max="7"
+              value="5"
+              step="0.01"
+              id="decay"
+              name="branch_decay"
+            />
+          </div>
+          <div>
+            <label for="right">Right angle</label>
+            <input
+              type="number"
+              min="1.5"
+              max="4"
+              value="1.5"
+              step="0.01"
+              id="right"
+              name="right_angle"
+            />
+          </div>
+          <div>
+            <label for="left">Left angle</label>
+            <input
+              type="number"
+              min="1.5"
+              max="4"
+              value="1.5"
+              step="0.01"
+              id="left"
+              name="left_angle"
+            />
+          </div>
+          <div>
+            <label for="width">Stroke width</label>
+            <input
+              type="number"
+              min="2"
+              max="10"
+              value="2"
+              step="1"
+              id="width"
+              name="width"
+            />
+          </div>
+          <div>
+            <label for="treecolor">Tree color</label>
+            <input
+              class="color"
+              type="color"
+              id="treecolor"
+              name="treecolor"
+              value="#ff0000"
+            />
+          </div>
+          <div>
+            <label for="background-color">Background color</label>
+            <input
+              class="color"
+              type="color"
+              id="background-color"
+              name="background-color"
+              value="#add8e6"
+            />
+          </div>
+          <div class="button">
+            <button type="submit" value="Submit" id="button">Create</button>
+          </div>
+        </form>
+      </div>
     </div>
+
+    <!-- 
     <div>Branch length</div>
     <div class="slidecontainer">
       <input
@@ -54,6 +148,6 @@
         class="slider"
         id="leftAngle"
       />
-    </div>
+    </div> -->
   </body>
 </html>

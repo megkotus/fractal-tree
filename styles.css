@@ -75,3 +75,13 @@ button {
   margin-top: 1em;
   font-size: 20px;
 }
+
+.hidden {
+  opacity: 0%;
+}
+.labelDownload {
+  margin-top: 1.5em;
+}
+.download {
+  margin-top: 0.3em;
+}

@@ -13,54 +13,48 @@ const ANGLE = Math.PI / 10;
 
 function background(bgColor) {
   ctx.fillStyle = bgColor;
-  ctx.fillRect(10, 10, 1500, 1500);
+  ctx.fillRect(0, 0, 1500, 1500);
 }
 
-const randomLineGenerator = function (num) {
-  const chars = "[]+";
-  let result = "";
-  for (let i = 0; i < num; i++) {
-    result += chars.charAt(Math.trunc(Math.random() * chars.length));
+const Rotation = Object.freeze({
+  Straight: 0,
+  Left: 1,
+  Right: 2,
+});
+
+const rotations = Object.values(Rotation);
+
+function getRandomRotation() {
+  return rotations[Math.trunc(Math.random() * rotations.length)];
+}
+
+function processRotation(rotation, ctx, drawData, trunkLength) {
+  if (rotation === Rotation.Right) {
+    ctx.rotate(drawData.rightAngle);
+    branch(drawData, trunkLength * drawData.branchDecay);
+  } else if (rotation === Rotation.Left) {
+    ctx.rotate(drawData.leftAngle);
+    branch(drawData, trunkLength * drawData.branchDecay);
+  } else {
+    branch(drawData, trunkLength * drawData.branchDecay);
   }
-  console.log(result);
-  return result;
-};
+}
 
-function branch(drawData) {
-  let line = randomLineGenerator(2);
-
+function branch(drawData, trunkLength) {
   ctx.beginPath();
   // Draw trunk
   ctx.moveTo(0, 0);
-  ctx.lineTo(0, -drawData.trunkLength);
+  ctx.lineTo(0, -trunkLength);
   // Move to the top
-  ctx.translate(0, -drawData.trunkLength);
+  ctx.translate(0, -trunkLength);
   ctx.strokeStyle = drawData.treeColor;
   ctx.lineWidth = drawData.width;
   ctx.stroke();
   // Draw branches
-  if (drawData.trunkLength > 10) {
+  if (trunkLength > 10) {
     ctx.save();
-    for (let i in line) {
-      if (line[i] === "[") {
-        ctx.rotate(drawData.rightAngle);
-        branch({
-          ...drawData,
-          trunkLength: drawData.trunkLength * drawData.branchDecay,
-        });
-      } else if (line[i] === "]") {
-        ctx.rotate(drawData.leftAngle);
-        branch({
-          ...drawData,
-          trunkLength: drawData.trunkLength * drawData.branchDecay,
-        });
-      } else {
-        branch({
-          ...drawData,
-          trunkLength: drawData.trunkLength * drawData.branchDecay,
-        });
-      }
-    }
+    processRotation(getRandomRotation(), ctx, drawData, trunkLength);
+    processRotation(getRandomRotation(), ctx, drawData, trunkLength);
 
     ctx.restore();
   }
@@ -70,7 +64,7 @@ function draw(drawData) {
   ctx.reset();
   background(drawData.backgroundColor);
   ctx.translate(600, 1000);
-  branch(drawData);
+  branch(drawData, drawData.trunkLength);
 }
 
 // Default color on load
@@ -103,17 +97,3 @@ download.addEventListener("click", function (e) {
     1
   );
 });
-
-// Done:
-// 1. draw only within canvas range
-// 2. change bg color - form/dropdown
-// 3. change stroke color - form/dropdown
-// 4. Add starting values -> change reset condition
-// 5. Add form
-// 6. Created Form Data Object
-// 7. Added generation of a random 2-symbol line to randomize branch growth direction
-// 8. Added download button
-
-// // To do:
-// // 1. Apply L-system to generation
-// // 2. Decrease line width of new branches
